@@ -1,24 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
 
 function App() {
+  const [token, setToken] = useState<string>(window.localStorage.getItem('token') ?? '');
+
+  const clientID = 'gccrk5tmgyuq326eyvye4zqbf6rt5s';
+  const loginUrl = `https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=${clientID}&redirect_uri=${window.location.origin}&scope=`;
+
+  useEffect(() => {
+    const match = /access_token=([^&]+)/.exec(window.location.hash);
+    if (match) {
+      window.location.hash = '';
+      window.localStorage.setItem('token', match[1]);
+      setToken(match[1]);
+    }
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {token && <span>Logged in</span>}
+      {!token && <a href={loginUrl}>Login</a>}
     </div>
   );
 }
