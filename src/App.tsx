@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { Clips } from './Clips';
+import { loginUrl } from './twitch';
 
 function App() {
   const [token, setToken] = useState<string>(window.localStorage.getItem('token') ?? '');
 
-  const clientID = 'gccrk5tmgyuq326eyvye4zqbf6rt5s';
-  const loginUrl = `https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=${clientID}&redirect_uri=${window.location.origin}&scope=`;
+  const username = window.location.pathname.substring(1);
 
   useEffect(() => {
     const match = /access_token=([^&]+)/.exec(window.location.hash);
@@ -17,8 +18,9 @@ function App() {
 
   return (
     <div>
-      {token && <span>Logged in</span>}
+      {token && username && <Clips username={username} token={token} />}
       {!token && <a href={loginUrl}>Login</a>}
+      {token && !username && <span>No user</span>}
     </div>
   );
 }
