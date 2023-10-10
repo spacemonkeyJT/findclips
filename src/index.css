@@ -76,3 +76,28 @@ html body {
 .clip .creator {
   color: #777;
 }
+
+.login-button {
+  border-radius: 20px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 250px;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  text-decoration: none;
+  background-color: #8C38F6;
+}
+
+.login-button .label {
+  position: absolute;
+  top: 13px;
+  left: 65px;
+}
+
+.twitch-icon {
+  margin: 10px 10px 5px 10px;
+  fill: #fff;
+  width: 30px;
+  display: inline;
+}
