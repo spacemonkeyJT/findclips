@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Clips } from './Clips';
+import { ClipsPage } from './ClipsPage';
 import { loginUrl } from './twitch';
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
 
   return (
     <div>
-      {token && username && <Clips username={username} token={token} />}
+      {token && username && <ClipsPage username={username} token={token} />}
       {!token && <a href={loginUrl}>Login</a>}
       {token && !username && <span>No user</span>}
     </div>

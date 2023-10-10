@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Clip, User, getAllClips, getUser } from './twitch';
+import { ClipPanel } from './ClipPanel';
 
 interface Props {
   username: string;
   token: string;
 }
 
-export const Clips = ({ username, token }: Props) => {
+export const ClipsPage = ({ username, token }: Props) => {
   const [user, setUser] = useState<User | undefined>();
   const [search, setSearch] = useState<string>('');
   const [allClips, setAllClips] = useState<Clip[]>([]);
@@ -53,11 +54,11 @@ export const Clips = ({ username, token }: Props) => {
   if (user) {
     return <div className="clips">
       <img className="userlogo" src={user.profile_image_url} alt={user.display_name} />
-      <div className="userdesc">Finding clips for <b>{user.display_name}</b></div>
+      <span className="userdesc">Finding clips for <b>{user.display_name}</b></span>
       {loading && <div>Loading...</div>}
       {!loading && <>
         <input type="text" value={search} onChange={e => setSearch(e.target.value)} />
-        <pre>{JSON.stringify(filteredClips, null, 2)}</pre>
+        {filteredClips.map(clip => <ClipPanel key={clip.id} clip={clip} />)}
       </>}
     </div>
   } else {
