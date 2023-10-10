@@ -1,13 +1,57 @@
-body {
+html body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #000;
+  color: #ddd;
+  padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.navbar {
+  position: fixed;
+  background-color: #000;
+  width: 100%;
+  height: 120px;
 }
+
+.userlogo {
+  border-radius: 40px;
+  width: 100px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.userdesc {
+  font-size: 30px;
+  color: #999;
+  position: absolute;
+  top: 23px;
+  left: 140px;
+}
+
+.searchbox {
+  display: inline-block;
+  position: absolute;
+  left: 140px;
+  top: 68px;
+  width: 400px;
+  height: 37px;
+  background-color: #222;
+  border: 1px solid #333;
+  border-radius: 10px;
+  color: #ddd;
+  font-size: 20px;
+  padding-left: 10px;
+}
+
+.loading {
+  position: absolute;
+  left: 140px;
+  top: 75px;
+}
+
+.clipspanel {
+  padding-top: 130px;
+  padding-left: 20px;
+}
+

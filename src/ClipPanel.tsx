@@ -7,6 +7,6 @@ export const ClipPanel = ({ clip }: { clip: Clip }) => {
       <img src={clip.thumbnail_url} alt="thumbnail" />
     </a>
     <div className="title">{clip.title}</div>
-    <div className="creator">{clip.creator_name}</div>
+    <div className="creator">Clipped by {clip.creator_name}</div>
   </div>
 }

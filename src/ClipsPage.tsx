@@ -53,13 +53,15 @@ export const ClipsPage = ({ username, token }: Props) => {
 
   if (user) {
     return <div className="clips">
-      <img className="userlogo" src={user.profile_image_url} alt={user.display_name} />
-      <span className="userdesc">Finding clips for <b>{user.display_name}</b></span>
-      {loading && <div>Loading...</div>}
-      {!loading && <>
-        <input type="text" value={search} onChange={e => setSearch(e.target.value)} />
+      <div className="navbar">
+        <img className="userlogo" src={user.profile_image_url} alt={user.display_name} />
+        <span className="userdesc">Finding clips for <b>{user.display_name}</b></span>
+        {loading && <div className="loading">Loading...</div>}
+        {!loading && <input className="searchbox" type="text" value={search} onChange={e => setSearch(e.target.value)} placeholder="Enter search term" />}
+      </div>
+      {!loading && <div className="clipspanel">
         {filteredClips.map(clip => <ClipPanel key={clip.id} clip={clip} />)}
-      </>}
+      </div>}
     </div>
   } else {
     return null;
