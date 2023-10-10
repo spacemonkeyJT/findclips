@@ -29,11 +29,8 @@ html body {
   left: 140px;
 }
 
-.searchbox {
+.searchbox, .userbox {
   display: inline-block;
-  position: absolute;
-  left: 140px;
-  top: 68px;
   width: 400px;
   height: 37px;
   background-color: #222;
@@ -42,6 +39,23 @@ html body {
   color: #ddd;
   font-size: 20px;
   padding-left: 10px;
+}
+
+.searchbox {
+  position: absolute;
+  left: 140px;
+  top: 68px;
+}
+
+.userbox {
+  margin: 20px;
+}
+
+.user-select .title {
+  font-size: 20px;
+  color: #ccc;
+  margin-left: 20px;
+  margin-top: 20px;
 }
 
 .loading {

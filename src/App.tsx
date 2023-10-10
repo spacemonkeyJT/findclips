@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { ClipsPage } from './ClipsPage';
 import { loginUrl } from './twitch';
+import { UserSelect } from './UserSelect';
 
 function getUsername() {
   const { hash } = window.location;
   if (hash && !hash.startsWith('#access_token')) {
     return hash.substring(1);
   }
-  return undefined;
+  return '';
 }
 
 function App() {
   const [token, setToken] = useState<string>(window.localStorage.getItem('token') ?? '');
+  const [username, setUsername] = useState<string>(getUsername());
 
   useEffect(() => {
     const match = /access_token=([^&]+)/.exec(window.location.hash);
@@ -22,7 +24,10 @@ function App() {
     }
   }, []);
 
-  const username = getUsername();
+  const changeUserName = (user: string) => {
+    setUsername(user);
+    window.location.hash = user;
+  }
 
   return (
     <div>
@@ -33,7 +38,7 @@ function App() {
         </svg>
         <span className="label">Login with Twitch</span>
       </a>}
-      {token && !username && <span>No user</span>}
+      {token && !username && <UserSelect token={token} onChange={changeUserName} username={username} />}
     </div>
   );
 }
