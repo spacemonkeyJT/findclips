@@ -2,10 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { ClipsPage } from './ClipsPage';
 import { loginUrl } from './twitch';
 
+function getUsername() {
+  const { hash } = window.location;
+  if (hash && !hash.startsWith('#access_token')) {
+    return hash.substring(1);
+  }
+  return undefined;
+}
+
 function App() {
   const [token, setToken] = useState<string>(window.localStorage.getItem('token') ?? '');
-
-  const username = window.location.pathname.substring(1);
 
   useEffect(() => {
     const match = /access_token=([^&]+)/.exec(window.location.hash);
@@ -15,6 +21,8 @@ function App() {
       setToken(match[1]);
     }
   }, []);
+
+  const username = getUsername();
 
   return (
     <div>
