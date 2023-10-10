@@ -55,3 +55,24 @@ html body {
   padding-left: 20px;
 }
 
+.clip {
+  display: inline-block;
+  padding: 10px;
+  border: 1px solid #000;
+  border-radius: 10px;
+  color: #ddd;
+}
+
+.clip .thumbnail img {
+  width: 300px;
+}
+
+.clip:hover {
+  border: 1px solid rgb(34, 44, 54);
+  background-color: rgb(22, 25, 28);
+  color: #fff;
+}
+
+.clip .creator {
+  color: #777;
+}
