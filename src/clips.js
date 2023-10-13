@@ -150,6 +150,8 @@ function showSearchBox() {
 export async function renderUserClips(username, token) {
   console.log('showUserClips');
 
+  document.title = `${username} - Find Twitch Clips`;
+
   // Load the selected user info
   const { data } = await apiCall(`https://api.twitch.tv/helix/users?login=${username}`, token);
 
