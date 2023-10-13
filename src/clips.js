@@ -48,19 +48,20 @@ function searchClips() {
   const searchBox = /** @type {HTMLInputElement | undefined} */ (document.getElementsByClassName('searchbox')[0]);
   if (searchBox) {
     const searchText = searchBox.value;
-    if (searchText) {
-      console.log(`searchClips: ${searchText}`);
-      /** @type {Clip[]} */
-      const filteredClips = [];
+    const clipsPanel = document.getElementsByClassName('clipspanel')[0];
+    if (clipsPanel) {
       if (searchText) {
-        for (const clip of clips) {
-          if (clip.title.toLowerCase().indexOf(searchText) !== -1) {
-            filteredClips.push(clip);
+        console.log(`searchClips: ${searchText}`);
+        /** @type {Clip[]} */
+        const filteredClips = [];
+        if (searchText) {
+          for (const clip of clips) {
+            if (clip.title.toLowerCase().indexOf(searchText) !== -1) {
+              filteredClips.push(clip);
+            }
           }
         }
-      }
-      const clipsPanel = document.getElementsByClassName('clipspanel')[0];
-      if (clipsPanel) {
+
         clipsPanel.innerHTML = filteredClips.map(clip => `
           <div class="clip">
             <a target="_blank" rel="noreferrer" href="${clip.url}" class="thumbnail">
@@ -69,6 +70,8 @@ function searchClips() {
             <div class="title">${clip.title}</div>
             <div class="creator">Clipped by ${clip.creator_name}</div>
           </div>`).join('\n');
+      } else {
+        clipsPanel.innerHTML = '';
       }
     }
   }
@@ -157,6 +160,15 @@ export async function renderUserClips(username, token) {
 
   /** @type {User} */
   const user = data[0];
+
+  if (!user) {
+    root.innerHTML = `
+      <div class="error">No such user: ${username}</div>
+      <a class="backbutton" href="${getSiteUrl()}">
+        <img src="images/back.png" />
+      </a>`;
+    return;
+  }
 
   root.innerHTML = `
     <div class="clips">

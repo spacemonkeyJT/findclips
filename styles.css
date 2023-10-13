@@ -106,3 +106,8 @@ html body {
 .backbutton img {
   width: 50px;
 }
+
+.error {
+  margin: 20px;
+  color: #e00;
+}
