@@ -204,8 +204,37 @@
           url = `${baseUrl}&after=${cursor}`;
         }
 
+        // Show the search box now the clips are loaded
         document.getElementsByClassName('loading')[0].style.display = 'none';
-        document.getElementsByClassName('searchbox')[0].style.display = 'block';
+        const searchBox = document.getElementsByClassName('searchbox')[0];
+        searchBox.style.display = 'block';
+        const clipsPanel = document.getElementsByClassName('clipspanel')[0];
+
+        let delayTimer;
+        searchBox.onkeyup = function(e) {
+          if (delayTimer) {
+            clearTimeout(delayTimer);
+          }
+          delayTimer = setTimeout(() => {
+            const filteredClips = [];
+            const searchText = e.target.value.toLowerCase();
+            if (searchText) {
+              for (const clip of clips) {
+                if (clip.title.toLowerCase().indexOf(searchText) !== -1) {
+                  filteredClips.push(clip);
+                }
+              }
+            }
+            clipsPanel.innerHTML = filteredClips.map(clip => `
+              <div class="clip">
+                <a target="_blank" rel="noreferrer" href="${clip.url}" class="thumbnail">
+                  <img src="${clip.thumbnail_url}" alt="thumbnail" />
+                </a>
+                <div class="title">${clip.title}</div>
+                <div class="creator">Clipped by ${clip.creator_name}</div>
+              </div>`).join('\n');
+          }, 1000);
+        }
       }
     }
   </script>
