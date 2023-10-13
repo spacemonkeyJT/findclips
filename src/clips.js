@@ -5,13 +5,28 @@ import { apiCall, root } from "./utils.js";
 /** @type {number | undefined} */
 let delayTimer;
 
+/**
+ * @typedef {{
+ *   url: string;
+ *   thumbnail: string;
+ *   title: string;
+ *   creator: string;
+ * }} ClipData
+ */
+
 function searchClips(searchText, clips) {
   console.log(`searchClips: ${searchText}`);
+  /** @type {ClipData[]} */
   const filteredClips = [];
   if (searchText) {
     for (const clip of clips) {
       if (clip.title.toLowerCase().indexOf(searchText) !== -1) {
-        filteredClips.push(clip);
+        filteredClips.push({
+          url: clip.url,
+          thumbnail: clip.thumbnail_url,
+          title: clip.title,
+          creator: clip.creator_name
+        });
       }
     }
   }
@@ -20,10 +35,10 @@ function searchClips(searchText, clips) {
     clipsPanel.innerHTML = filteredClips.map(clip => `
       <div class="clip">
         <a target="_blank" rel="noreferrer" href="${clip.url}" class="thumbnail">
-          <img src="${clip.thumbnail_url}" alt="thumbnail" />
+          <img src="${clip.thumbnail}" alt="thumbnail" />
         </a>
         <div class="title">${clip.title}</div>
-        <div class="creator">Clipped by ${clip.creator_name}</div>
+        <div class="creator">Clipped by ${clip.creator}</div>
       </div>`).join('\n');
   }
 }
