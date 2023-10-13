@@ -183,7 +183,7 @@
               </a>
               <span class="userdesc">Finding clips for <b>${user.display_name}</b></span>
               <div class="loading">Loading...</div>
-              <input class="searchbox" type="text" placeholder="Enter search term" />
+              <input class="searchbox" type="text" placeholder="Enter search term" style="display: none" />
             </div>
             <div class="clipspanel"></div>
           </div>`;
@@ -204,6 +204,8 @@
           url = `${baseUrl}&after=${cursor}`;
         }
 
+        document.getElementsByClassName('loading')[0].style.display = 'none';
+        document.getElementsByClassName('searchbox')[0].style.display = 'block';
       }
     }
   </script>
