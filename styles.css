@@ -75,6 +75,12 @@ html body {
   border: 1px solid #000;
   border-radius: 10px;
   color: #ddd;
+  width: 300px;
+}
+
+.clip .title {
+  text-wrap: nowrap;
+  overflow: hidden;
 }
 
 .clip .thumbnail img {
