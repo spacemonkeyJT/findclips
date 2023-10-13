@@ -28,7 +28,7 @@ function searchClips(searchText, clips) {
   }
 }
 
-export async function showUserClips(username, token) {
+export async function renderUserClips(username, token) {
   console.log('showUserClips');
 
   // Load the selected user info

@@ -1,37 +1,14 @@
 // @ts-check
 
-import { showUserClips } from "./clips.js";
+import { renderUserClips } from "./clips.js";
+import { renderUserSelect } from "./user_select.js";
 import { clientID, root } from "./utils.js";
 
 let token = window.localStorage.getItem('token');
 let username;
 
-function showUserSelect() {
-  console.log('showUserSelect');
-
-  // Show the user selection panel
-  root.innerHTML = `
-    <div class="user-select">
-      <div class="title">Find clips for:</div>
-      <input
-        class="userbox"
-        type="text"
-        placeholder="Enter streamer name" />
-      <div class="title">Recent:</div>
-    </div>`;
-
-  const userbox = /** @type {HTMLInputElement} */(document.getElementsByClassName('userbox')[0]);
-
-  userbox.onkeyup = function(e) {
-    if (e.code === 'Enter') {
-      window.location.hash = userbox.value;
-    }
-  }
-}
-
 function renderPage() {
   const { hash } = window.location;
-  console.log(`renderPage: ${hash}`);
 
   // Grab the current username from the url
   if (!hash.startsWith('#access_token')) {
@@ -39,9 +16,9 @@ function renderPage() {
     window.localStorage.setItem('username', username);
     if (token) {
       if (username) {
-        showUserClips(username, token);
+        renderUserClips(username, token);
       } else {
-        showUserSelect();
+        renderUserSelect();
       }
     } else {
       // No API token, redirect to login page.
@@ -58,8 +35,6 @@ function renderPage() {
 // Grab the API token from the url if we're coming back from login
 const match = /access_token=([^&]+)/.exec(window.location.hash);
 if (match) {
-  console.log('got access token');
-
   window.location.hash = '';
   window.localStorage.setItem('token', match[1]);
   token = match[1];
