@@ -1,6 +1,6 @@
 // @ts-check
 
-import { apiCall, root } from "./utils.js";
+import { apiCall, getSiteUrl, root } from "./utils.js";
 
 /** @type {number | undefined} */
 let delayTimer;
@@ -168,6 +168,9 @@ export async function renderUserClips(username, token) {
         <div class="loading">Loading...</div>
         <input class="searchbox" type="text" placeholder="Enter search term" style="display: none" />
       </div>
+      <a class="backbutton" href="${getSiteUrl()}">
+        <img src="images/back.png" />
+      </a>
       <div class="clipspanel"></div>
     </div>`;
 

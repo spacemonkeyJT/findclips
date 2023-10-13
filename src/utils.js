@@ -20,3 +20,11 @@ export async function apiCall(url, token) {
   });
   return await res.json();
 }
+
+export function getSiteUrl() {
+  if (window.location.hostname === 'localhost') {
+    return 'http://localhost:3000';
+  } else {
+    return 'https://spacemonkeyjt.github.io/findclips/';
+  }
+}

@@ -90,3 +90,13 @@ html body {
 .clip .creator {
   color: #777;
 }
+
+.backbutton {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+.backbutton img {
+  width: 50px;
+}

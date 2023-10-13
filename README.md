@@ -1,7 +1,6 @@
 # FindClips
 
 - TODO: Add recent streamers
-- TODO: Add custom back button
 - TODO: Add favourite clips
 - TODO: Improve styling
 

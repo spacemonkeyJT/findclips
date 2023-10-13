@@ -2,7 +2,7 @@
 
 import { renderUserClips } from "./clips.js";
 import { renderUserSelect } from "./user_select.js";
-import { clientID, root } from "./utils.js";
+import { clientID, getSiteUrl, root } from "./utils.js";
 
 let token = window.localStorage.getItem('token');
 let username;
@@ -23,11 +23,7 @@ function renderPage() {
     } else {
       // No API token, redirect to login page.
       console.log('no token, login');
-      let redirectURI = 'https://spacemonkeyjt.github.io/findclips/';
-      if (window.location.hostname === 'localhost') {
-        redirectURI = 'http://localhost:3000';
-      }
-      window.location.href = `https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=${clientID}&redirect_uri=${redirectURI}&scope=`;
+      window.location.href = `https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=${clientID}&redirect_uri=${getSiteUrl()}&scope=`;
     }
   }
 }
