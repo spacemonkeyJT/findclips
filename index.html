@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find Twitch Clips</title>
+</head>
+<body>
+  <script type="module">
+    const clientID = 'gccrk5tmgyuq326eyvye4zqbf6rt5s';
+
+    async function apiCall(url) {
+      const res = await fetch(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Client-Id': clientID
+        }
+      });
+      return await res.json();
+    }
+
+    let username;
+    const { hash } = window.location;
+    if (hash && !hash.startsWith('#access_token')) {
+      username = hash.substring(1);
+      window.localStorage.setItem('username', username);
+    }
+
+    let token = window.localStorage.getItem('token');
+    const match = /access_token=([^&]+)/.exec(window.location.hash);
+    if (match) {
+      window.location.hash = '';
+      window.localStorage.setItem('token', match[1]);
+      token = match[1];
+      if (!username) {
+        username = window.localStorage.getItem('username');
+        if (username) {
+          window.location.hash = username;
+        }
+      }
+    }
+
+    if (!token) {
+      window.location.href = `https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=${clientID}&redirect_uri=${window.location.origin}&scope=`;
+    } else {
+      console.log({ token, username });
+      const { data } = await apiCall(`https://api.twitch.tv/helix/users?login=${username}`, token);
+      const user = data[0];
+      console.log({ user });
+    }
+  </script>
+
+</body>
+</html>
