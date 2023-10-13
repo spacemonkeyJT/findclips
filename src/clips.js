@@ -1,6 +1,6 @@
 // @ts-check
 
-import { apiCall, getSiteUrl, root } from "./utils.js";
+import { apiCall, getSiteUrl, getStoredObject, root, setStoredObject } from "./utils.js";
 
 /** @type {number | undefined} */
 let delayTimer;
@@ -82,14 +82,8 @@ function searchClips() {
  * @param {string} username
  */
 function loadClipsFromCache(username) {
-  console.log('loadClipsFromCache');
-  const clipsJson = window.localStorage.getItem(`clips_${username}`);
-  if (clipsJson) {
-    clips = JSON.parse(clipsJson);
-    console.log(`Loaded ${clips.length} clips from cache`);
-  } else {
-    console.log('No cached clips');
-  }
+  clips = getStoredObject(`clips_${username}`) ?? [];
+  console.log(`Loaded ${clips.length} clips from cache`);
 }
 
 /**
@@ -98,13 +92,13 @@ function loadClipsFromCache(username) {
  */
 function updateCache(username) {
   console.log(`Updating cache with ${clips.length} clips`);
-  window.localStorage.setItem(`clips_${username}`, JSON.stringify(clips));
+  setStoredObject(`clips_${username}`, clips);
 }
 
 /**
- *
- * @param {User} user
- * @param {string} token
+ * Loads clips from the Twitch API.
+ * @param {User} user The user to load clips for.
+ * @param {string} token The API token.
  */
 async function loadClipsFromAPI(user, token) {
   console.log('loadClipsFromAPI');
@@ -146,6 +140,18 @@ function showSearchBox() {
 }
 
 /**
+ * Adds a user to the recent user list
+ * @param {User} user The user to add
+ */
+function addRecentUser(user) {
+  /** @type {User[]} */
+  let users = getStoredObject('recent_users') ?? [];
+  users = users.filter(r => r.id !== user.id);
+  users.push(user);
+  setStoredObject('recent_users', users);
+}
+
+/**
  * Render the clips page.
  * @param {string} username The streamer username.
  * @param {string} token The API token.
@@ -160,6 +166,8 @@ export async function renderUserClips(username, token) {
 
   /** @type {User} */
   const user = data[0];
+
+  addRecentUser(user);
 
   if (!user) {
     root.innerHTML = `

@@ -28,3 +28,24 @@ export function getSiteUrl() {
     return 'https://spacemonkeyjt.github.io/findclips/';
   }
 }
+
+/**
+ * Deserializes an object from JSON from the local storage.
+ * @param {string} name Name of the item to get.
+ */
+export function getStoredObject(name) {
+  const json = window.localStorage.getItem(name);
+  if (json) {
+    return JSON.parse(json);
+  }
+  return undefined;
+}
+
+/**
+ * Serializes an object to JSON and writes it to local storage.
+ * @param {string} name The name of the item to set.
+ * @param {any} value The object to store.
+ */
+export function setStoredObject(name, value) {
+  window.localStorage.setItem(name, JSON.stringify(value));
+}

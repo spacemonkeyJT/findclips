@@ -1,5 +1,16 @@
+import { getStoredObject } from "./utils.js";
+
 export function renderUserSelect() {
   console.log('showUserSelect');
+
+  const recentUsers = getStoredObject('recent_users') ?? [];
+
+  const recentUsersLinks = recentUsers.map(user => `<div class="user">
+    <a class="link" href="#${user.login}">
+      <img class="userlogo" src="${user.profile_image_url}" />
+      <div class="username">${user.display_name}</div>
+    </a>
+  </div>`).join('\n');
 
   // Show the user selection panel
   root.innerHTML = `
@@ -10,6 +21,10 @@ export function renderUserSelect() {
         type="text"
         placeholder="Enter streamer name" />
       <div class="title">Recent:</div>
+      <div class="recent-users">
+        ${recentUsers.length > 0 ? recentUsersLinks :
+          '<div class="no-recents">No recent users found</div>'}
+      </div>
     </div>`;
 
   const userbox = /** @type {HTMLInputElement} */(document.getElementsByClassName('userbox')[0]);
