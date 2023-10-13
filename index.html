@@ -236,7 +236,11 @@
         } else {
           // No API token, redirect to login page.
           console.log('no token, login');
-          window.location.href = `https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=${clientID}&redirect_uri=${window.location.origin}&scope=`;
+          let redirectURI = 'https://spacemonkeyjt.github.io/findclips/';
+          if (window.location.hostname === 'localhost') {
+            redirectURI = 'http://localhost:3000';
+          }
+          window.location.href = `https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=${clientID}&redirect_uri=${redirectURI}&scope=`;
         }
       }
     }
