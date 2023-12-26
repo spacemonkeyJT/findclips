@@ -18,6 +18,12 @@ export async function apiCall(url, token) {
       'Client-Id': clientID
     }
   });
+  if (res.status >= 400) {
+    throw {
+      message: `Error during request to ${url}`,
+      statusCode: res.status,
+    };
+  }
   return await res.json();
 }
 

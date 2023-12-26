@@ -7,7 +7,11 @@ import { clientID, getSiteUrl, root } from "./utils.js";
 let token = window.localStorage.getItem('token');
 let username;
 
-function renderPage() {
+function login() {
+  window.location.href = `https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=${clientID}&redirect_uri=${getSiteUrl()}&scope=`;
+}
+
+async function renderPage() {
   const { hash } = window.location;
 
   // Grab the current username from the url
@@ -15,15 +19,22 @@ function renderPage() {
     username = hash.substring(1);
     window.localStorage.setItem('username', username);
     if (token) {
-      if (username) {
-        renderUserClips(username, token);
-      } else {
-        renderUserSelect();
+      try {
+        if (username) {
+          await renderUserClips(username, token);
+        } else {
+          renderUserSelect();
+        }
+      } catch (err) {
+        console.error(err);
+        if (err.statusCode >= 400) {
+          login();
+        }
       }
     } else {
       // No API token, redirect to login page.
       console.log('no token, login');
-      window.location.href = `https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=${clientID}&redirect_uri=${getSiteUrl()}&scope=`;
+      login();
     }
   }
 }
@@ -43,4 +54,4 @@ if (match) {
 
 window.onhashchange = renderPage;
 
-renderPage();
+renderPage().catch(console.error);
